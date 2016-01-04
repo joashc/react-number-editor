@@ -81,7 +81,7 @@ class NumberEditor extends React.Component {
 
         if(nextProps.dataDrag.isMoving) {
             var step = this._getStepValue(nextProps.dataDrag, this.props.step);
-            this._changeValue(this.state.dragStartValue + nextProps.dataDrag.moveDeltaX * (step / 2));
+            this._changeValue(this.state.dragStartValue - nextProps.dataDrag.moveDeltaY * (step / 10));
         }
     }
 
@@ -162,7 +162,7 @@ class NumberEditor extends React.Component {
     }
 
     render() {
-        var cursor = 'ew-resize';
+        var cursor = 'ns-resize';
         var readOnly = true;
         var value = this.props.value;
         if(this.state.startEditing) {
