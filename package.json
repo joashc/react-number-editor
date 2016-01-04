@@ -28,6 +28,7 @@
   "license": "MIT",
   "dependencies": {
     "clamp": "^1.0.1",
+    "material-ui": "^0.14.0",
     "react-clickdrag": "^3.0.1"
   },
   "devDependencies": {

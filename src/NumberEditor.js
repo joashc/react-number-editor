@@ -1,9 +1,9 @@
 'use strict';
-
 import React, { PropTypes } from 'react';
 import clickDrag from 'react-clickdrag';
 import clamp from 'clamp';
 import objectAssign from 'react/lib/Object.assign';
+import TextField from 'material-ui/lib/text-field';
 
 const KEYS = {
     UP: 38,
@@ -26,11 +26,13 @@ const ALLOWED_KEYS = [
     96, 97, 98, 99, 100, 101, 102, 103, 104, 105, // Numpad 0-9
     109, // Numpad - (Minus)
     110 // Numpad . (Decimal point)
+
 ];
 
 class NumberEditor extends React.Component {
     static propTypes = {
         className: PropTypes.string,
+        label: PropTypes.string,
         decimals: PropTypes.number,
         max: PropTypes.number,
         min: PropTypes.number,
@@ -80,13 +82,14 @@ class NumberEditor extends React.Component {
             });
         }
 
-        if(nextProps.dataDrag.isMoving) {
+        if(nextProps.dataDrag.isMoving && !this.state.startEditing) {
             var step = this._getStepValue(nextProps.dataDrag, this.props.step);
             this._changeValue(this.state.dragStartValue - nextProps.dataDrag.moveDeltaY * (step / 10));
         }
     }
 
     _changeValue(value) {
+        if (typeof(value) === 'string') value = parseInt(value);
         var newVal = clamp(value.toFixed(this.props.decimals), this.props.min, this.props.max);
 
         if(this.props.value !== newVal) {
@@ -182,16 +185,18 @@ class NumberEditor extends React.Component {
         }
 
         return (
-            <input
-                type="text"
-                className={this.props.className}
-                readOnly={readOnly}
-                value={value}
-                style={objectAssign(this.props.style, { cursor: cursor })}
-                onKeyDown={this._onKeyDown}
-                onDoubleClick={this._onDoubleClick}
-                onChange={this._onChange}
-                onBlur={this._onBlur}
+            <TextField
+            readOnly={readOnly}
+            ref="textField"
+            value={this.state.startEditing ? this.state.localValue : value}
+            className={this.props.className}
+            style={objectAssign(this.props.style, { cursor: cursor, textAlign: "center" })}
+            floatingLabelText={this.props.label}
+            onDoubleClick={this._onDoubleClick}
+            onTouchTap={this._onDoubleClick}
+            onChange={this._onChange}
+            onBlur={this._onBlur}
+            onKeyDown={this._onKeyDown}
             />
         );
     }
