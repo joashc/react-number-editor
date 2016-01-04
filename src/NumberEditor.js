@@ -67,7 +67,8 @@ class NumberEditor extends React.Component {
         this.state = {
             startEditing: false,
             wasUsingSpecialKeys: false,
-            dragStartValue: Number(this.props.value)
+            dragStartValue: Number(this.props.value),
+            localValue: this.props.value
         }
     }
 
@@ -146,19 +147,25 @@ class NumberEditor extends React.Component {
 
     _onDoubleClick() {
         this.setState({
-            startEditing: true
+            startEditing: true,
+            localValue: this.props.value
         });
+        this.refs.textField.focus();
     }
 
     _onChange(e) {
-        this.props.onValueChange(e.target.value);
+      if (this.state.startEditing) {
+        this.setState({localValue: e.target.value});
+        return;
+      }
+      this._changeValue(e.target.value);
     }
 
     _onBlur(e) {
-        this._changeValue(Number(e.target.value));
-        this.setState({
-            startEditing: false
-        });
+        if (this.state.startEditing) {
+          this.setState({ startEditing: false });
+          this._changeValue(Number(this.state.localValue));
+        }
     }
 
     render() {
