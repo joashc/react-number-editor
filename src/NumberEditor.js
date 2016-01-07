@@ -45,7 +45,7 @@ class NumberEditor extends React.Component {
           PropTypes.number
         ]).isRequired,
         onKeyDown: PropTypes.func
-    }
+    };
 
     static defaultProps = {
         className: '',
@@ -56,7 +56,7 @@ class NumberEditor extends React.Component {
         step: 1,
         stepModifier: 10,
         style: {}
-    }
+    };
 
     constructor(props) {
         super(props);
