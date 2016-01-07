@@ -191,6 +191,7 @@ class NumberEditor extends React.Component {
             value={this.state.startEditing ? this.state.localValue : value}
             className={this.props.className}
             style={objectAssign(this.props.style, { cursor: cursor, textAlign: "center" })}
+            inputStyle={objectAssign(this.props.style, { cursor: cursor, textAlign: "center" })}
             floatingLabelText={this.props.label}
             onDoubleClick={this._onDoubleClick}
             onTouchTap={this._onDoubleClick}
