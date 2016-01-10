@@ -167,7 +167,8 @@ class NumberEditor extends React.Component {
     _onBlur(e) {
         if (this.state.startEditing) {
           this.setState({ startEditing: false });
-          this._changeValue(Number(this.state.localValue));
+          if (!isNaN(Number(this.state.localValue))) this._changeValue(Number(this.state.localValue));
+          else this.setState({localValue: this.props.value});
         }
     }
 
