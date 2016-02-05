@@ -116,10 +116,12 @@ class NumberEditor extends React.Component {
 
         if(key === KEYS.UP) {
             e.preventDefault();
+            this.setState({localValue: value + step});
             this._changeValue(value + step);
         }
         else if(key === KEYS.DOWN) {
             e.preventDefault();
+            this.setState({localValue: value - step});
             this._changeValue(value - step);
         }
         else if(key === KEYS.ENTER) {
